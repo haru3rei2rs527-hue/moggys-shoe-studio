@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moggy's Shoe Studio — チラシ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       印刷設定
+    ============================================================ */
+    @media print {
+      body { margin: 0; }
+      .flyer { box-shadow: none !important; }
+    }
+
+    @page {
+      size: A4;
+      margin: 20mm;
+    }
+
+    /* ============================================================
+       ベース
+    ============================================================ */
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #EDEDE9;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 20px;
+      min-height: 100vh;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    /* ============================================================
+       チラシ全体
+    ============================================================ */
+    .flyer {
+      background: #F5EFE6;
+      color: #3A2E24;
+      width: 100%;
+      max-width: 600px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    }
+
+    /* ============================================================
+       ヘッダー（ダークブラウン帯）
+    ============================================================ */
+    .flyer-header {
+      background: #3A2E24;
+      color: #F5EFE6;
+      padding: 36px 44px 30px;
+    }
+
+    .brand-label {
+      font-size: 10px;
+      letter-spacing: 0.20em;
+      color: #B89A7A;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .product-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 34px;
+      font-weight: 400;
+      line-height: 1.2;
+      margin: 0;
+      color: #F5EFE6;
+    }
+
+    .product-subtitle {
+      font-size: 13px;
+      color: #B89A7A;
+      margin-top: 8px;
+      letter-spacing: 0.06em;
+    }
+
+    .badge-made {
+      display: inline-block;
+      border: 1px solid #B89A7A;
+      color: #B89A7A;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      padding: 4px 12px;
+      margin-top: 16px;
+      text-transform: uppercase;
+    }
+
+    /* ============================================================
+       ボディ
+    ============================================================ */
+    .flyer-body {
+      padding: 32px 44px;
+    }
+
+    .section-label {
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      color: #9C7A5A;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      margin-top: 24px;
+    }
+
+    .section-label:first-child {
+      margin-top: 0;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #D4C4B0;
+      margin: 24px 0;
+    }
+
+    /* ============================================================
+       カラーチップ
+    ============================================================ */
+    .color-row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .color-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #EDE3D6;
+      border-radius: 4px;
+      padding: 7px 12px;
+      font-size: 13px;
+      color: #3A2E24;
+    }
+
+    .dot {
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      border: 1px solid rgba(58,46,36,0.18);
+    }
+
+    /* よく使うカラードット — 必要に応じて追加してください */
+    .dot-black      { background: #1C1C1C; }
+    .dot-brown      { background: #7B4F2E; }
+    .dot-beige      { background: #C9AC8C; }
+    .dot-darkbrown  { background: #4A2E14; }
+    .dot-white      { background: #F5F0E8; border-color: #C4B8A8; }
+    .dot-navy       { background: #1C2B4A; }
+    .dot-red        { background: #9B2626; }
+
+    /* ============================================================
+       2カラムグリッド（カラー選択用）
+    ============================================================ */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    /* ============================================================
+       サイズカード
+    ============================================================ */
+    .size-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 8px;
+    }
+
+    .size-card {
+      background: #EDE3D6;
+      border-radius: 4px;
+      padding: 9px 12px;
+      line-height: 1.4;
+    }
+
+    .size-key {
+      font-weight: 500;
+      font-size: 15px;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .size-val {
+      color: #7A6050;
+      font-size: 11px;
+    }
+
+    /* ============================================================
+       備考欄（自由テキスト）
+    ============================================================ */
+    .note-box {
+      background: #EDE3D6;
+      border-radius: 6px;
+      padding: 14px 16px;
+      font-size: 12px;
+      color: #5A4535;
+      line-height: 1.8;
+    }
+
+    /* ============================================================
+       フッター
+    ============================================================ */
+    .flyer-footer {
+      background: #3A2E24;
+      color: #B89A7A;
+      padding: 18px 44px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      color: #F5EFE6;
+      letter-spacing: 0.08em;
+    }
+
+    .footer-sub {
+      font-size: 11px;
+      color: #7A6050;
+      margin-top: 4px;
+    }
+
+    .footer-contact {
+      text-align: right;
+      font-size: 12px;
+      color: #D4C4B0;
+      line-height: 1.8;
+    }
+  </style>
+</head>
+
+<body>
+<div class="flyer">
+
+  <!-- ========================================================
+       ▼ ここから編集エリア
+       各変数を書き換えるだけで別商品チラシに対応できます
+  ========================================================= -->
+
+  <!-- ■ ヘッダー情報 -->
+  <div class="flyer-header">
+    <div class="brand-label">Moggy's Shoe Studio</div>
+    <h1 class="product-title">Ben's Sandal</h1>                      <!-- 商品名 -->
+    <p class="product-subtitle">オーダーメイドサンダル　受注受付中</p>  <!-- キャッチコピー -->
+    <div class="badge-made">Handcrafted in Takami · Since 2022</div>  <!-- バッジ文言 -->
+  </div>
+
+  <div class="flyer-body">
+
+    <!-- ■ アッパーカラー & ソールカラー（2列） -->
+    <div class="two-col">
+
+      <div>
+        <div class="section-label">アッパーカラー</div>
+        <div class="color-row">
+          <!-- dot-クラス一覧: dot-black / dot-brown / dot-beige / dot-darkbrown / dot-white / dot-navy / dot-red -->
+          <div class="color-chip"><span class="dot dot-black"></span>黒</div>
+          <div class="color-chip"><span class="dot dot-brown"></span>茶</div>
+          <div class="color-chip"><span class="dot dot-beige"></span>ベージュ</div>
+          <!-- ← 色を追加・削除してください -->
+        </div>
+      </div>
+
+      <div>
+        <div class="section-label">ソールカラー</div>
+        <div class="color-row">
+          <div class="color-chip"><span class="dot dot-black"></span>黒</div>
+          <div class="color-chip"><span class="dot dot-brown"></span>茶</div>
+          <!-- ← 色を追加・削除してください -->
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="divider">
+
+    <!-- ■ スタックカラー（1列） -->
+    <div class="section-label">スタックカラー</div>
+    <div class="color-row" style="flex-direction: row; flex-wrap: wrap; gap: 8px;">
+      <div class="color-chip"><span class="dot dot-black"></span>黒</div>
+      <div class="color-chip"><span class="dot dot-brown"></span>茶</div>
+      <div class="color-chip"><span class="dot dot-darkbrown"></span>ダークブラウン</div>
+      <!-- ← 色を追加・削除してください -->
+    </div>
+
+    <hr class="divider">
+
+    <!-- ■ サイズ展開 -->
+    <div class="section-label">サイズ</div>
+    <div class="size-grid">
+      <!-- size-key = ラベル / size-val = cm表記 -->
+      <div class="size-card"><span class="size-key">XS</span><span class="size-val">23 〜 23.5 cm</span></div>
+      <div class="size-card"><span class="size-key">S</span><span class="size-val">24 〜 24.5 cm</span></div>
+      <div class="size-card"><span class="size-key">M</span><span class="size-val">25 〜 25.5 cm</span></div>
+      <div class="size-card"><span class="size-key">L</span><span class="size-val">26 〜 26.5 cm</span></div>
+      <!-- ← サイズを追加・削除してください -->
+    </div>
+
+    <!-- ■ 備考（不要なら削除OK） -->
+    <hr class="divider">
+    <div class="section-label">備考・ご注文の流れ</div>
+    <div class="note-box">
+      ご注文の際はサイズ・カラーをお知らせください。<br>
+      納期：ご注文から約〇〇週間<br>
+      価格：¥〇〇,〇〇〇（税込）
+    </div>
+
+  </div><!-- /flyer-body -->
+
+  <!-- ■ フッター（連絡先） -->
+  <div class="flyer-footer">
+    <div>
+      <div class="footer-brand">Moggy's Shoe Studio</div>
+      <div class="footer-sub">ご注文・お問い合わせ</div>
+    </div>
+    <div class="footer-contact">
+      〇〇〇-〇〇〇〇-〇〇〇〇<br>          <!-- 電話番号 -->
+      @moggys_shoe_studio                   <!-- SNSアカウントなど -->
+    </div>
+  </div>
+
+</div><!-- /flyer -->
+</body>
+</html>

@@ -3,331 +3,678 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Moggy's Shoe Studio — チラシ</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
-
+  <title>Ben's Sandal Simulator | Moggy's Shoe Studio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    /* ============================================================
-       印刷設定
-    ============================================================ */
-    @media print {
-      body { margin: 0; }
-      .flyer { box-shadow: none !important; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark:   #3A2E24;
+      --mid:    #7B5E42;
+      --gold:   #B89A7A;
+      --cream:  #F5EFE6;
+      --bg:     #EDEDE9;
+      --card:   #EDE3D6;
     }
 
-    @page {
-      size: A4;
-      margin: 20mm;
-    }
-
-    /* ============================================================
-       ベース
-    ============================================================ */
     body {
       font-family: 'Noto Sans JP', sans-serif;
-      background: #EDEDE9;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 40px 20px;
-      min-height: 100vh;
-      margin: 0;
-      box-sizing: border-box;
+      background: var(--bg);
+      color: var(--dark);
     }
 
-    /* ============================================================
-       チラシ全体
-    ============================================================ */
-    .flyer {
-      background: #F5EFE6;
-      color: #3A2E24;
-      width: 100%;
-      max-width: 600px;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
-    }
-
-    /* ============================================================
-       ヘッダー（ダークブラウン帯）
-    ============================================================ */
-    .flyer-header {
-      background: #3A2E24;
-      color: #F5EFE6;
-      padding: 36px 44px 30px;
-    }
-
-    .brand-label {
-      font-size: 10px;
-      letter-spacing: 0.20em;
-      color: #B89A7A;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-
-    .product-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 34px;
-      font-weight: 400;
-      line-height: 1.2;
-      margin: 0;
-      color: #F5EFE6;
-    }
-
-    .product-subtitle {
-      font-size: 13px;
-      color: #B89A7A;
-      margin-top: 8px;
-      letter-spacing: 0.06em;
-    }
-
-    .badge-made {
-      display: inline-block;
-      border: 1px solid #B89A7A;
-      color: #B89A7A;
-      font-size: 9px;
-      letter-spacing: 0.14em;
-      padding: 4px 12px;
-      margin-top: 16px;
-      text-transform: uppercase;
-    }
-
-    /* ============================================================
-       ボディ
-    ============================================================ */
-    .flyer-body {
-      padding: 32px 44px;
-    }
-
-    .section-label {
-      font-size: 9px;
-      letter-spacing: 0.18em;
-      color: #9C7A5A;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-      margin-top: 24px;
-    }
-
-    .section-label:first-child {
-      margin-top: 0;
-    }
-
-    .divider {
-      border: none;
-      border-top: 1px solid #D4C4B0;
-      margin: 24px 0;
-    }
-
-    /* ============================================================
-       カラーチップ
-    ============================================================ */
-    .color-row {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .color-chip {
+    /* ── HEADER ─────────────────────────────────── */
+    header {
+      background: var(--dark);
+      padding: 0 40px;
+      height: 72px;
       display: flex;
       align-items: center;
-      gap: 8px;
-      background: #EDE3D6;
-      border-radius: 4px;
-      padding: 7px 12px;
-      font-size: 13px;
-      color: #3A2E24;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
-
-    .dot {
-      width: 13px;
-      height: 13px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      border: 1px solid rgba(58,46,36,0.18);
+    .logo-wrap {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 5px 10px;
+      display: flex;
+      align-items: center;
     }
-
-    /* よく使うカラードット — 必要に応じて追加してください */
-    .dot-black      { background: #1C1C1C; }
-    .dot-brown      { background: #7B4F2E; }
-    .dot-beige      { background: #C9AC8C; }
-    .dot-darkbrown  { background: #4A2E14; }
-    .dot-white      { background: #F5F0E8; border-color: #C4B8A8; }
-    .dot-navy       { background: #1C2B4A; }
-    .dot-red        { background: #9B2626; }
-
-    /* ============================================================
-       2カラムグリッド（カラー選択用）
-    ============================================================ */
-    .two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-
-    /* ============================================================
-       サイズカード
-    ============================================================ */
-    .size-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-      gap: 8px;
-    }
-
-    .size-card {
-      background: #EDE3D6;
-      border-radius: 4px;
-      padding: 9px 12px;
-      line-height: 1.4;
-    }
-
-    .size-key {
-      font-weight: 500;
-      font-size: 15px;
-      display: block;
-      margin-bottom: 2px;
-    }
-
-    .size-val {
-      color: #7A6050;
+    .logo { height: 44px; width: auto; display: block; }
+    nav a {
+      color: var(--gold);
+      text-decoration: none;
       font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-left: 28px;
+      transition: color 0.2s;
     }
+    nav a:hover { color: var(--cream); }
 
-    /* ============================================================
-       備考欄（自由テキスト）
-    ============================================================ */
-    .note-box {
-      background: #EDE3D6;
-      border-radius: 6px;
-      padding: 14px 16px;
-      font-size: 12px;
-      color: #5A4535;
+    /* ── HERO ───────────────────────────────────── */
+    .hero {
+      background: var(--dark);
+      padding: 52px 40px 60px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 46px;
+      font-weight: 400;
+      color: var(--cream);
+      line-height: 1.15;
+    }
+    .hero p {
+      color: var(--gold);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      margin-top: 10px;
       line-height: 1.8;
     }
+    .badge {
+      display: inline-block;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      padding: 5px 18px;
+      margin-top: 22px;
+      text-transform: uppercase;
+    }
 
-    /* ============================================================
-       フッター
-    ============================================================ */
-    .flyer-footer {
-      background: #3A2E24;
-      color: #B89A7A;
-      padding: 18px 44px;
+    /* ── SIMULATOR ──────────────────────────────── */
+    .sim-wrap {
+      max-width: 1120px;
+      margin: 56px auto;
+      padding: 0 24px;
+    }
+    .sim-grid {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    /* Preview card */
+    .preview {
+      background: var(--cream);
+      border-radius: 16px;
+      padding: 36px 32px 28px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+      position: sticky;
+      top: 88px;
+      text-align: center;
+    }
+    .preview svg { width: 100%; max-width: 460px; height: auto; }
+    .preview-sub {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-top: 22px;
+    }
+    .preview-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 19px;
+      color: var(--dark);
+      margin-top: 5px;
+    }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      justify-content: center;
+      margin-top: 16px;
+    }
+    .chip {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--card);
+      border-radius: 20px;
+      padding: 4px 10px 4px 6px;
+      font-size: 10px;
+      color: var(--dark);
+    }
+    .chip-dot {
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.12);
+      flex-shrink: 0;
+    }
+
+    /* Controls panel */
+    .controls { display: flex; flex-direction: column; gap: 18px; }
+
+    .cgroup {
+      background: var(--cream);
+      border-radius: 12px;
+      padding: 20px 22px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .chead { margin-bottom: 4px; }
+    .clabel {
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      color: var(--gold);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 3px;
+    }
+    .cname { font-size: 15px; font-weight: 500; color: var(--dark); }
+    .cdesc { font-size: 11px; color: #9C7A5A; margin: 6px 0 14px; line-height: 1.5; }
+
+    .swatches { display: flex; flex-wrap: wrap; gap: 12px; }
+
+    .sw {
+      display: flex; flex-direction: column; align-items: center; gap: 5px;
+      cursor: pointer; border: none; background: none; padding: 0;
+    }
+    .sw-circle {
+      width: 44px; height: 44px; border-radius: 50%;
+      border: 2.5px solid transparent;
+      outline: 2.5px solid transparent;
+      outline-offset: 2.5px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.22);
+      transition: outline-color 0.15s, border-color 0.15s, transform 0.1s;
+    }
+    .sw:hover .sw-circle { transform: scale(1.08); }
+    .sw.active .sw-circle {
+      border-color: white;
+      outline-color: var(--dark);
+    }
+    .sw-name { font-size: 10px; color: var(--dark); white-space: nowrap; }
+
+    .order-link {
+      display: block; width: 100%;
+      background: var(--dark); color: var(--cream);
+      border: none; border-radius: 8px;
+      padding: 16px; text-align: center;
+      font-family: inherit; font-size: 13px; letter-spacing: 0.08em;
+      cursor: pointer; text-decoration: none;
+      transition: background 0.2s;
+      margin-top: 4px;
+    }
+    .order-link:hover { background: #2a201a; }
+
+    /* ── GALLERY ────────────────────────────────── */
+    .gallery {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 64px 24px 72px;
+    }
+    .sec-lbl {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .sec-ttl {
+      font-family: 'Playfair Display', serif;
+      font-size: 27px;
+      color: var(--dark);
+      margin-bottom: 28px;
+    }
+    .photos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .photo {
+      border-radius: 10px;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      background: var(--card);
+    }
+    .photo img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform 0.35s ease;
+    }
+    .photo:hover img { transform: scale(1.05); }
+    .photo-cap {
+      font-size: 11px;
+      color: #9C7A5A;
+      margin-top: 8px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── ORDER SECTION ──────────────────────────── */
+    .order-sec {
+      background: var(--dark);
+      padding: 80px 40px;
+      text-align: center;
+    }
+    .order-sec .sec-lbl { color: var(--gold); }
+    .order-sec .sec-ttl { color: var(--cream); margin-bottom: 16px; }
+    .order-sec p {
+      color: var(--gold);
+      font-size: 13px;
+      line-height: 2.2;
+      margin-bottom: 36px;
+    }
+    .order-btn-lg {
+      display: inline-block;
+      background: var(--gold); color: var(--dark);
+      padding: 16px 56px; border-radius: 4px;
+      font-size: 14px; font-weight: 500; letter-spacing: 0.08em;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .order-btn-lg:hover { background: #ccb090; }
+
+    /* ── FOOTER ─────────────────────────────────── */
+    footer {
+      background: #2a201a;
+      padding: 32px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
     }
-
-    .footer-brand {
-      font-family: 'Playfair Display', serif;
-      font-size: 15px;
-      color: #F5EFE6;
-      letter-spacing: 0.08em;
+    .footer-logo-wrap {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 5px 10px;
     }
+    .footer-logo { height: 40px; display: block; }
+    .footer-info { font-size: 11px; color: #6a5040; line-height: 1.9; text-align: right; }
 
-    .footer-sub {
-      font-size: 11px;
-      color: #7A6050;
-      margin-top: 4px;
+    /* ── RESPONSIVE ─────────────────────────────── */
+    @media (max-width: 860px) {
+      .sim-grid { grid-template-columns: 1fr; }
+      .preview { position: static; }
     }
-
-    .footer-contact {
-      text-align: right;
-      font-size: 12px;
-      color: #D4C4B0;
-      line-height: 1.8;
+    @media (max-width: 600px) {
+      header { padding: 0 20px; }
+      .hero { padding: 40px 20px 48px; }
+      .hero h1 { font-size: 34px; }
+      .sim-wrap, .gallery { padding: 0 16px; }
+      .sim-wrap { margin: 40px auto; }
+      .photos { grid-template-columns: 1fr; }
+      footer { padding: 24px 20px; flex-direction: column; align-items: flex-start; }
+      .footer-info { text-align: left; }
     }
   </style>
 </head>
-
 <body>
-<div class="flyer">
 
-  <!-- ========================================================
-       ▼ ここから編集エリア
-       各変数を書き換えるだけで別商品チラシに対応できます
-  ========================================================= -->
+  <!-- HEADER -->
+  <header>
+    <div class="logo-wrap">
+      <img src="logo.webp" alt="Moggy's Shoe Studio" class="logo">
+    </div>
+    <nav>
+      <a href="#simulator">Simulator</a>
+      <a href="#gallery">Gallery</a>
+      <a href="https://moggys-shoe-studio.square.site/" target="_blank">Shop</a>
+    </nav>
+  </header>
 
-  <!-- ■ ヘッダー情報 -->
-  <div class="flyer-header">
-    <div class="brand-label">Moggy's Shoe Studio</div>
-    <h1 class="product-title">Ben's Sandal</h1>                      <!-- 商品名 -->
-    <p class="product-subtitle">オーダーメイドサンダル　受注受付中</p>  <!-- キャッチコピー -->
-    <div class="badge-made">Handcrafted in Takami · Since 2022</div>  <!-- バッジ文言 -->
+  <!-- HERO -->
+  <div class="hero">
+    <h1>Ben's Sandal</h1>
+    <p>
+      セミオーダーシミュレーター<br>
+      アッパー・インソール・スタック・ソールを自由に組み合わせて<br>
+      完成イメージを確認できます
+    </p>
+    <div class="badge">Handcrafted in Takami · Since 2022</div>
   </div>
 
-  <div class="flyer-body">
+  <!-- SIMULATOR -->
+  <section id="simulator" class="sim-wrap">
+    <div class="sim-grid">
 
-    <!-- ■ アッパーカラー & ソールカラー（2列） -->
-    <div class="two-col">
+      <!-- ▼ SVG PREVIEW ─────────────────── -->
+      <div class="preview">
+        <svg id="sandal-svg" viewBox="0 0 500 430"
+             xmlns="http://www.w3.org/2000/svg"
+             role="img" aria-label="Ben's Sandal カラープレビュー">
 
-      <div>
-        <div class="section-label">アッパーカラー</div>
-        <div class="color-row">
-          <!-- dot-クラス一覧: dot-black / dot-brown / dot-beige / dot-darkbrown / dot-white / dot-navy / dot-red -->
-          <div class="color-chip"><span class="dot dot-black"></span>黒</div>
-          <div class="color-chip"><span class="dot dot-brown"></span>茶</div>
-          <div class="color-chip"><span class="dot dot-beige"></span>ベージュ</div>
-          <!-- ← 色を追加・削除してください -->
+          <!-- ── ground shadow ── -->
+          <ellipse cx="252" cy="406" rx="210" ry="13" fill="rgba(0,0,0,0.10)"/>
+
+          <!-- ══ OUTSOLE (ソール) ══════════════════ -->
+          <path class="zone-sole"
+            d="M 62,350 Q 62,366 252,373 Q 442,366 442,350
+               L 442,360 Q 442,375 252,382 Q 62,375 62,360 Z"
+            fill="#1A1A1A"/>
+
+          <!-- ══ STACK (スタック) ══════════════════ -->
+          <path class="zone-stack"
+            d="M 56,283 Q 54,320 56,350
+               Q 56,360 252,366 Q 448,360 448,350
+               Q 450,320 448,283
+               Q 448,272 252,267 Q 56,272 56,283 Z"
+            fill="#3B1F0E"/>
+          <!-- stack top highlight edge -->
+          <ellipse cx="252" cy="268" rx="196" ry="11"
+            fill="rgba(255,255,255,0.07)"/>
+
+          <!-- ══ INSOLE (インソール) ═════════════ -->
+          <ellipse class="zone-insole"
+            cx="252" cy="260" rx="196" ry="33"
+            fill="#D4B896"/>
+          <!-- inner depth shadow -->
+          <ellipse cx="252" cy="255" rx="140" ry="19"
+            fill="rgba(0,0,0,0.05)"/>
+          <!-- brand stamp -->
+          <text x="252" y="263" text-anchor="middle"
+            font-size="8.5" fill="rgba(58,46,36,0.28)"
+            font-family="Georgia,serif" letter-spacing="2.5">MOGGY'S</text>
+
+          <!-- ══ UPPER STRAP (アッパー) ══════════ -->
+          <path class="zone-upper"
+            d="M 62,260
+               C 57,216 68,170 95,142
+               C 125,112 171,98 225,94
+               L 279,94
+               C 333,98 379,112 409,142
+               C 436,170 447,216 442,260
+               Q 350,249 252,247 Q 154,249 62,260 Z"
+            fill="#7B4F2E"/>
+          <!-- suede surface sheen -->
+          <path
+            d="M 112,260 C 109,226 119,189 140,165
+               C 163,140 197,129 230,126 L 274,126
+               C 307,129 341,140 364,165 C 385,189 395,226 392,260
+               Q 330,251 252,249 Q 174,251 112,260 Z"
+            fill="rgba(255,255,255,0.05)" pointer-events="none"/>
+          <!-- strap texture grain lines -->
+          <path d="M 120,173 Q 252,157 384,173"
+            stroke="rgba(0,0,0,0.07)" stroke-width="1" fill="none"/>
+          <path d="M 100,204 Q 252,187 404,204"
+            stroke="rgba(0,0,0,0.06)" stroke-width="1" fill="none"/>
+          <path d="M 85,233 Q 252,215 419,233"
+            stroke="rgba(0,0,0,0.05)" stroke-width="1" fill="none"/>
+
+          <!-- ── FRINGE STRIPS (アッパーと同素材) ── -->
+          <!-- hanging from the bottom arc of the strap -->
+          <g class="zone-upper" fill="#7B4F2E">
+            <rect x="82"  y="256" width="5.5" height="44" rx="2.5"/>
+            <rect x="97"  y="253" width="5.5" height="47" rx="2.5"/>
+            <rect x="112" y="250" width="5.5" height="50" rx="2.5"/>
+            <rect x="127" y="248" width="5.5" height="52" rx="2.5"/>
+            <rect x="142" y="246" width="5.5" height="54" rx="2.5"/>
+            <rect x="157" y="245" width="5.5" height="55" rx="2.5"/>
+            <rect x="172" y="243" width="5.5" height="57" rx="2.5"/>
+            <rect x="187" y="242" width="5.5" height="58" rx="2.5"/>
+            <rect x="202" y="242" width="5.5" height="58" rx="2.5"/>
+            <rect x="217" y="242" width="5.5" height="58" rx="2.5"/>
+            <rect x="232" y="242" width="5.5" height="58" rx="2.5"/>
+            <rect x="247" y="242" width="5.5" height="58" rx="2.5"/>
+            <rect x="262" y="242" width="5.5" height="58" rx="2.5"/>
+            <rect x="277" y="242" width="5.5" height="58" rx="2.5"/>
+            <rect x="292" y="242" width="5.5" height="58" rx="2.5"/>
+            <rect x="307" y="243" width="5.5" height="57" rx="2.5"/>
+            <rect x="322" y="245" width="5.5" height="55" rx="2.5"/>
+            <rect x="337" y="246" width="5.5" height="54" rx="2.5"/>
+            <rect x="352" y="248" width="5.5" height="52" rx="2.5"/>
+            <rect x="367" y="250" width="5.5" height="50" rx="2.5"/>
+            <rect x="382" y="253" width="5.5" height="47" rx="2.5"/>
+            <rect x="397" y="256" width="5.5" height="44" rx="2.5"/>
+            <rect x="412" y="260" width="5.5" height="40" rx="2.5"/>
+          </g>
+
+          <!-- ── CENTRE TASSEL ── -->
+          <g class="zone-upper" fill="#7B4F2E">
+            <!-- cord from strap to knot -->
+            <rect x="249" y="222" width="6" height="30" rx="3"/>
+            <!-- tassel knot/gather -->
+            <ellipse cx="252" cy="252" rx="17" ry="12"/>
+            <!-- tassel fringe hanging below knot -->
+            <rect x="236" y="262" width="4.5" height="27" rx="2"/>
+            <rect x="243" y="263" width="4.5" height="29" rx="2"/>
+            <rect x="250" y="263" width="4.5" height="30" rx="2"/>
+            <rect x="257" y="263" width="4.5" height="29" rx="2"/>
+            <rect x="264" y="262" width="4.5" height="27" rx="2"/>
+          </g>
+
+          <!-- ── kiltie slot lines (decorative cuts) ── -->
+          <line x1="175" y1="132" x2="162" y2="168"
+            stroke="rgba(0,0,0,0.12)" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="202" y1="124" x2="189" y2="161"
+            stroke="rgba(0,0,0,0.12)" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="302" y1="124" x2="315" y2="161"
+            stroke="rgba(0,0,0,0.12)" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="329" y1="132" x2="342" y2="168"
+            stroke="rgba(0,0,0,0.12)" stroke-width="1.5" stroke-linecap="round"/>
+
+        </svg>
+
+        <div class="preview-sub">Color Preview — Ben's Sandal</div>
+        <div class="preview-name" id="preview-name">
+          茶 × ナチュラル × ダークブラウン × 黒
         </div>
-      </div>
 
-      <div>
-        <div class="section-label">ソールカラー</div>
-        <div class="color-row">
-          <div class="color-chip"><span class="dot dot-black"></span>黒</div>
-          <div class="color-chip"><span class="dot dot-brown"></span>茶</div>
-          <!-- ← 色を追加・削除してください -->
+        <div class="chips">
+          <div class="chip">
+            <div class="chip-dot" id="chip-upper" style="background:#7B4F2E"></div>
+            <span>アッパー: <b id="chip-upper-name">茶</b></span>
+          </div>
+          <div class="chip">
+            <div class="chip-dot" id="chip-insole" style="background:#D4B896"></div>
+            <span>インソール: <b id="chip-insole-name">ナチュラル</b></span>
+          </div>
+          <div class="chip">
+            <div class="chip-dot" id="chip-stack" style="background:#3B1F0E"></div>
+            <span>スタック: <b id="chip-stack-name">ダークブラウン</b></span>
+          </div>
+          <div class="chip">
+            <div class="chip-dot" id="chip-sole" style="background:#1A1A1A"></div>
+            <span>ソール: <b id="chip-sole-name">黒</b></span>
+          </div>
         </div>
+      </div><!-- /preview -->
+
+      <!-- ▼ CONTROLS ──────────────────────── -->
+      <div class="controls">
+
+        <div class="cgroup">
+          <div class="chead">
+            <span class="clabel">Upper Color</span>
+            <span class="cname">アッパーカラー</span>
+          </div>
+          <p class="cdesc">ベルト・フリンジ部分のスエード革の色</p>
+          <div class="swatches" id="sw-upper"></div>
+        </div>
+
+        <div class="cgroup">
+          <div class="chead">
+            <span class="clabel">Insole Color</span>
+            <span class="cname">インソール</span>
+          </div>
+          <p class="cdesc">足が直接触れるフットベッドの革の色</p>
+          <div class="swatches" id="sw-insole"></div>
+        </div>
+
+        <div class="cgroup">
+          <div class="chead">
+            <span class="clabel">Stack Color</span>
+            <span class="cname">スタックカラー</span>
+          </div>
+          <p class="cdesc">ソール側面の積み上げ革（コバ）の色</p>
+          <div class="swatches" id="sw-stack"></div>
+        </div>
+
+        <div class="cgroup">
+          <div class="chead">
+            <span class="clabel">Sole Color</span>
+            <span class="cname">ソールカラー</span>
+          </div>
+          <p class="cdesc">底面のアウトソール（ゴム底）の色</p>
+          <div class="swatches" id="sw-sole"></div>
+        </div>
+
+        <a href="https://moggys-shoe-studio.square.site/"
+           target="_blank" class="order-link" id="order-link">
+          このカラーでオーダーする →
+        </a>
+
+      </div><!-- /controls -->
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery" class="gallery">
+    <div class="sec-lbl">Gallery</div>
+    <div class="sec-ttl">実物サンプル</div>
+    <div class="photos">
+      <div>
+        <div class="photo">
+          <img src="p1.jpg" alt="Ben's Sandal — フロントビュー" loading="lazy">
+        </div>
+        <p class="photo-cap">フロントビュー</p>
       </div>
-
+      <div>
+        <div class="photo">
+          <img src="p2.jpg" alt="Ben's Sandal — サイドビュー" loading="lazy">
+        </div>
+        <p class="photo-cap">サイドビュー</p>
+      </div>
+      <div>
+        <div class="photo">
+          <img src="p3.jpg" alt="Ben's Sandal — トップビュー" loading="lazy">
+        </div>
+        <p class="photo-cap">トップビュー</p>
+      </div>
     </div>
+  </section>
 
-    <hr class="divider">
-
-    <!-- ■ スタックカラー（1列） -->
-    <div class="section-label">スタックカラー</div>
-    <div class="color-row" style="flex-direction: row; flex-wrap: wrap; gap: 8px;">
-      <div class="color-chip"><span class="dot dot-black"></span>黒</div>
-      <div class="color-chip"><span class="dot dot-brown"></span>茶</div>
-      <div class="color-chip"><span class="dot dot-darkbrown"></span>ダークブラウン</div>
-      <!-- ← 色を追加・削除してください -->
-    </div>
-
-    <hr class="divider">
-
-    <!-- ■ サイズ展開 -->
-    <div class="section-label">サイズ</div>
-    <div class="size-grid">
-      <!-- size-key = ラベル / size-val = cm表記 -->
-      <div class="size-card"><span class="size-key">XS</span><span class="size-val">23 〜 23.5 cm</span></div>
-      <div class="size-card"><span class="size-key">S</span><span class="size-val">24 〜 24.5 cm</span></div>
-      <div class="size-card"><span class="size-key">M</span><span class="size-val">25 〜 25.5 cm</span></div>
-      <div class="size-card"><span class="size-key">L</span><span class="size-val">26 〜 26.5 cm</span></div>
-      <!-- ← サイズを追加・削除してください -->
-    </div>
-
-    <!-- ■ 備考（不要なら削除OK） -->
-    <hr class="divider">
-    <div class="section-label">備考・ご注文の流れ</div>
-    <div class="note-box">
-      ご注文の際はサイズ・カラーをお知らせください。<br>
-      納期：ご注文から約〇〇週間<br>
-      価格：¥〇〇,〇〇〇（税込）
-    </div>
-
-  </div><!-- /flyer-body -->
-
-  <!-- ■ フッター（連絡先） -->
-  <div class="flyer-footer">
-    <div>
-      <div class="footer-brand">Moggy's Shoe Studio</div>
-      <div class="footer-sub">ご注文・お問い合わせ</div>
-    </div>
-    <div class="footer-contact">
-      〇〇〇-〇〇〇〇-〇〇〇〇<br>          <!-- 電話番号 -->
-      @moggys_shoe_studio                   <!-- SNSアカウントなど -->
-    </div>
+  <!-- ORDER CTA -->
+  <div class="order-sec">
+    <div class="sec-lbl">Order</div>
+    <div class="sec-ttl">ご注文・お問い合わせ</div>
+    <p>
+      シミュレーターで気に入ったカラーの組み合わせをそのままオーダーできます。<br>
+      サイズ展開・価格・納期はオンラインショップをご覧ください。
+    </p>
+    <a href="https://moggys-shoe-studio.square.site/"
+       target="_blank" class="order-btn-lg">
+      オンラインショップへ
+    </a>
   </div>
 
-</div><!-- /flyer -->
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo-wrap">
+      <img src="logo.webp" alt="Moggy's Shoe Studio" class="footer-logo">
+    </div>
+    <div class="footer-info">
+      Moggy's Shoe Studio — Handcrafted in Takami · Since 2022<br>
+      @moggys_shoe_studio
+    </div>
+  </footer>
+
+  <!-- ══════════════════════════════════════════════
+       SCRIPT — Color Simulator Logic
+  ════════════════════════════════════════════════ -->
+  <script>
+    // ── Color palette ───────────────────────────
+    const palette = {
+      black:     { name: '黒',           hex: '#1A1A1A' },
+      darkbrown: { name: 'ダークブラウン', hex: '#3B1F0E' },
+      brown:     { name: '茶',           hex: '#7B4F2E' },
+      camel:     { name: 'キャメル',      hex: '#B8783A' },
+      beige:     { name: 'ベージュ',      hex: '#C9A87C' },
+      natural:   { name: 'ナチュラル',    hex: '#D4B896' },
+      white:     { name: 'ホワイト',      hex: '#F0E8DC' },
+    };
+
+    // ── Zone config ─────────────────────────────
+    const zones = {
+      upper:  {
+        label:  'アッパーカラー',
+        colors: ['black', 'darkbrown', 'brown', 'camel', 'beige'],
+        def:    'brown'
+      },
+      insole: {
+        label:  'インソール',
+        colors: ['natural', 'beige', 'camel', 'brown', 'white', 'black'],
+        def:    'natural'
+      },
+      stack:  {
+        label:  'スタックカラー',
+        colors: ['black', 'darkbrown', 'brown', 'camel'],
+        def:    'darkbrown'
+      },
+      sole:   {
+        label:  'ソールカラー',
+        colors: ['black', 'darkbrown', 'brown'],
+        def:    'black'
+      },
+    };
+
+    const state = {};
+
+    // ── Build swatch buttons ─────────────────────
+    function buildSwatches() {
+      Object.entries(zones).forEach(([zone, cfg]) => {
+        state[zone] = cfg.def;
+        const wrap = document.getElementById('sw-' + zone);
+        cfg.colors.forEach(key => {
+          const btn = document.createElement('button');
+          btn.className = 'sw' + (key === cfg.def ? ' active' : '');
+          btn.dataset.zone  = zone;
+          btn.dataset.color = key;
+          btn.title = palette[key].name;
+          btn.setAttribute('aria-label', palette[key].name);
+          btn.innerHTML =
+            `<div class="sw-circle" style="background:${palette[key].hex}"></div>` +
+            `<span class="sw-name">${palette[key].name}</span>`;
+          btn.addEventListener('click', () => pick(zone, key));
+          wrap.appendChild(btn);
+        });
+        applyFill(zone, cfg.def);
+      });
+    }
+
+    // ── Handle color pick ───────────────────────
+    function pick(zone, key) {
+      state[zone] = key;
+      applyFill(zone, key);
+
+      // swatch active ring
+      document.querySelectorAll('[data-zone="' + zone + '"]').forEach(b => {
+        b.classList.toggle('active', b.dataset.color === key);
+      });
+
+      // chip update
+      const dot  = document.getElementById('chip-' + zone);
+      const name = document.getElementById('chip-' + zone + '-name');
+      if (dot)  dot.style.background = palette[key].hex;
+      if (name) name.textContent = palette[key].name;
+
+      // preview title
+      refreshTitle();
+    }
+
+    // ── Apply fill to all SVG elements in zone ──
+    function applyFill(zone, key) {
+      const hex = palette[key].hex;
+      document.querySelectorAll('.zone-' + zone).forEach(el => {
+        el.style.fill = hex;
+      });
+    }
+
+    // ── Refresh the "A × B × C × D" title ──────
+    function refreshTitle() {
+      const el = document.getElementById('preview-name');
+      if (!el) return;
+      el.textContent =
+        palette[state.upper].name  + ' × ' +
+        palette[state.insole].name + ' × ' +
+        palette[state.stack].name  + ' × ' +
+        palette[state.sole].name;
+    }
+
+    buildSwatches();
+  </script>
 </body>
 </html>
