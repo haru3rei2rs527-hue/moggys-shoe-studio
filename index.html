@@ -9,12 +9,11 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --dark:   #3A2E24;
-      --mid:    #7B5E42;
-      --gold:   #B89A7A;
-      --cream:  #F5EFE6;
-      --bg:     #EDEDE9;
-      --card:   #EDE3D6;
+      --dark:  #3A2E24;
+      --gold:  #B89A7A;
+      --cream: #F5EFE6;
+      --bg:    #EDEDE9;
+      --card:  #EDE3D6;
     }
 
     body {
@@ -39,10 +38,8 @@
       background: var(--cream);
       border-radius: 8px;
       padding: 5px 10px;
-      display: flex;
-      align-items: center;
     }
-    .logo { height: 44px; width: auto; display: block; }
+    .logo { height: 44px; display: block; }
     nav a {
       color: var(--gold);
       text-decoration: none;
@@ -65,14 +62,13 @@
       font-size: 46px;
       font-weight: 400;
       color: var(--cream);
-      line-height: 1.15;
     }
     .hero p {
       color: var(--gold);
       font-size: 13px;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       margin-top: 10px;
-      line-height: 1.8;
+      line-height: 1.9;
     }
     .badge {
       display: inline-block;
@@ -87,47 +83,84 @@
 
     /* ── SIMULATOR ──────────────────────────────── */
     .sim-wrap {
-      max-width: 1120px;
+      max-width: 1100px;
       margin: 56px auto;
       padding: 0 24px;
     }
     .sim-grid {
       display: grid;
-      grid-template-columns: 1fr 400px;
+      grid-template-columns: 1fr 380px;
       gap: 36px;
       align-items: start;
     }
 
-    /* Preview card */
+    /* Photo Preview ─────────────────────────────── */
     .preview {
       background: var(--cream);
       border-radius: 16px;
-      padding: 36px 32px 28px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+      overflow: hidden;
+      box-shadow: 0 4px 28px rgba(0,0,0,0.10);
       position: sticky;
       top: 88px;
-      text-align: center;
     }
-    .preview svg { width: 100%; max-width: 460px; height: auto; }
-    .preview-sub {
-      font-size: 9px;
-      letter-spacing: 0.2em;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-top: 22px;
+
+    /* Photo container with crossfade */
+    .photo-stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: var(--card);
+      overflow: hidden;
     }
-    .preview-name {
+    .photo-stage img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.45s ease;
+    }
+    .photo-stage img.visible { opacity: 1; }
+
+    /* match badge */
+    .match-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 500;
+      z-index: 2;
+      transition: background 0.3s, color 0.3s;
+    }
+    .match-badge.exact {
+      background: rgba(58,46,36,0.82);
+      color: #F5EFE6;
+    }
+    .match-badge.approx {
+      background: rgba(184,154,122,0.88);
+      color: #3A2E24;
+    }
+
+    /* Preview footer */
+    .preview-foot {
+      padding: 20px 24px 22px;
+    }
+    .preview-product-name {
       font-family: 'Playfair Display', serif;
-      font-size: 19px;
+      font-size: 18px;
       color: var(--dark);
-      margin-top: 5px;
+      margin-bottom: 12px;
     }
+
+    /* color chips in preview footer */
     .chips {
       display: flex;
       flex-wrap: wrap;
       gap: 7px;
-      justify-content: center;
-      margin-top: 16px;
     }
     .chip {
       display: flex;
@@ -146,7 +179,7 @@
       flex-shrink: 0;
     }
 
-    /* Controls panel */
+    /* Controls ──────────────────────────────────── */
     .controls { display: flex; flex-direction: column; gap: 18px; }
 
     .cgroup {
@@ -155,7 +188,6 @@
       padding: 20px 22px;
       box-shadow: 0 2px 12px rgba(0,0,0,0.06);
     }
-    .chead { margin-bottom: 4px; }
     .clabel {
       font-size: 9px;
       letter-spacing: 0.16em;
@@ -165,28 +197,28 @@
       margin-bottom: 3px;
     }
     .cname { font-size: 15px; font-weight: 500; color: var(--dark); }
-    .cdesc { font-size: 11px; color: #9C7A5A; margin: 6px 0 14px; line-height: 1.5; }
+    .cdesc { font-size: 11px; color: #9C7A5A; margin: 6px 0 14px; }
 
-    .swatches { display: flex; flex-wrap: wrap; gap: 12px; }
+    .swatches { display: flex; gap: 14px; flex-wrap: wrap; }
 
     .sw {
       display: flex; flex-direction: column; align-items: center; gap: 5px;
       cursor: pointer; border: none; background: none; padding: 0;
     }
     .sw-circle {
-      width: 44px; height: 44px; border-radius: 50%;
+      width: 48px; height: 48px; border-radius: 50%;
       border: 2.5px solid transparent;
       outline: 2.5px solid transparent;
       outline-offset: 2.5px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.22);
-      transition: outline-color 0.15s, border-color 0.15s, transform 0.1s;
+      transition: outline-color 0.15s, border-color 0.15s, transform 0.12s;
     }
-    .sw:hover .sw-circle { transform: scale(1.08); }
+    .sw:hover .sw-circle { transform: scale(1.10); }
     .sw.active .sw-circle {
       border-color: white;
       outline-color: var(--dark);
     }
-    .sw-name { font-size: 10px; color: var(--dark); white-space: nowrap; }
+    .sw-name { font-size: 11px; color: var(--dark); white-space: nowrap; }
 
     .order-link {
       display: block; width: 100%;
@@ -202,45 +234,37 @@
 
     /* ── GALLERY ────────────────────────────────── */
     .gallery {
-      max-width: 1120px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 64px 24px 72px;
     }
     .sec-lbl {
-      font-size: 9px;
-      letter-spacing: 0.2em;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-bottom: 8px;
+      font-size: 9px; letter-spacing: 0.2em;
+      color: var(--gold); text-transform: uppercase; margin-bottom: 8px;
     }
     .sec-ttl {
       font-family: 'Playfair Display', serif;
-      font-size: 27px;
-      color: var(--dark);
-      margin-bottom: 28px;
+      font-size: 27px; color: var(--dark); margin-bottom: 28px;
     }
     .photos {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 14px;
     }
-    .photo {
+    .photo-card {
       border-radius: 10px;
       overflow: hidden;
-      aspect-ratio: 3/4;
+      aspect-ratio: 4/3;
       background: var(--card);
     }
-    .photo img {
+    .photo-card img {
       width: 100%; height: 100%;
       object-fit: cover; display: block;
       transition: transform 0.35s ease;
     }
-    .photo:hover img { transform: scale(1.05); }
+    .photo-card:hover img { transform: scale(1.05); }
     .photo-cap {
-      font-size: 11px;
-      color: #9C7A5A;
-      margin-top: 8px;
-      letter-spacing: 0.04em;
+      font-size: 11px; color: #9C7A5A; margin-top: 8px;
     }
 
     /* ── ORDER SECTION ──────────────────────────── */
@@ -252,10 +276,7 @@
     .order-sec .sec-lbl { color: var(--gold); }
     .order-sec .sec-ttl { color: var(--cream); margin-bottom: 16px; }
     .order-sec p {
-      color: var(--gold);
-      font-size: 13px;
-      line-height: 2.2;
-      margin-bottom: 36px;
+      color: var(--gold); font-size: 13px; line-height: 2.2; margin-bottom: 36px;
     }
     .order-btn-lg {
       display: inline-block;
@@ -271,17 +292,10 @@
     footer {
       background: #2a201a;
       padding: 32px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
+      display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 16px;
     }
-    .footer-logo-wrap {
-      background: var(--cream);
-      border-radius: 8px;
-      padding: 5px 10px;
-    }
+    .footer-logo-wrap { background: var(--cream); border-radius: 8px; padding: 5px 10px; }
     .footer-logo { height: 40px; display: block; }
     .footer-info { font-size: 11px; color: #6a5040; line-height: 1.9; text-align: right; }
 
@@ -321,8 +335,7 @@
     <h1>Ben's Sandal</h1>
     <p>
       セミオーダーシミュレーター<br>
-      アッパー・インソール・スタック・ソールを自由に組み合わせて<br>
-      完成イメージを確認できます
+      アッパー・インソール・スタックのカラーを選んで完成イメージを確認
     </p>
     <div class="badge">Handcrafted in Takami · Since 2022</div>
   </div>
@@ -331,144 +344,37 @@
   <section id="simulator" class="sim-wrap">
     <div class="sim-grid">
 
-      <!-- ▼ SVG PREVIEW ─────────────────── -->
+      <!-- ▼ PHOTO PREVIEW ─────────────────── -->
       <div class="preview">
-        <svg id="sandal-svg" viewBox="0 0 500 430"
-             xmlns="http://www.w3.org/2000/svg"
-             role="img" aria-label="Ben's Sandal カラープレビュー">
+        <div class="photo-stage" id="photo-stage">
 
-          <!-- ── ground shadow ── -->
-          <ellipse cx="252" cy="406" rx="210" ry="13" fill="rgba(0,0,0,0.10)"/>
+          <!-- All combination images preloaded, switched via JS -->
+          <img id="img-BL_BL_BL" src="sandal.pic/BL_BL_BL.png" alt="ブラック × ブラック × ブラック">
+          <img id="img-BL_BL_BR" src="sandal.pic/BL_BL_BR.png" alt="ブラック × ブラック × ブラウン">
+          <img id="img-BL_BR_BR" src="sandal.pic/BL_BR_BR.png" alt="ブラック × ブラウン × ブラウン">
+          <img id="img-BR_BL_BL" src="sandal.pic/BR_BL_BL.png" alt="ブラウン × ブラック × ブラック">
+          <img id="img-BR_BL_BR" src="sandal.pic/BR_BL_BR.png" alt="ブラウン × ブラック × ブラウン">
+          <img id="img-BR_BR_BR" src="sandal.pic/BR_BR_BR.png" alt="ブラウン × ブラウン × ブラウン">
+          <img id="img-DB_BR_BR" src="sandal.pic/DB_BR_BR.png" alt="ダークブラウン × ブラウン × ブラウン">
 
-          <!-- ══ OUTSOLE (ソール) ══════════════════ -->
-          <path class="zone-sole"
-            d="M 62,350 Q 62,366 252,373 Q 442,366 442,350
-               L 442,360 Q 442,375 252,382 Q 62,375 62,360 Z"
-            fill="#1A1A1A"/>
-
-          <!-- ══ STACK (スタック) ══════════════════ -->
-          <path class="zone-stack"
-            d="M 56,283 Q 54,320 56,350
-               Q 56,360 252,366 Q 448,360 448,350
-               Q 450,320 448,283
-               Q 448,272 252,267 Q 56,272 56,283 Z"
-            fill="#3B1F0E"/>
-          <!-- stack top highlight edge -->
-          <ellipse cx="252" cy="268" rx="196" ry="11"
-            fill="rgba(255,255,255,0.07)"/>
-
-          <!-- ══ INSOLE (インソール) ═════════════ -->
-          <ellipse class="zone-insole"
-            cx="252" cy="260" rx="196" ry="33"
-            fill="#D4B896"/>
-          <!-- inner depth shadow -->
-          <ellipse cx="252" cy="255" rx="140" ry="19"
-            fill="rgba(0,0,0,0.05)"/>
-          <!-- brand stamp -->
-          <text x="252" y="263" text-anchor="middle"
-            font-size="8.5" fill="rgba(58,46,36,0.28)"
-            font-family="Georgia,serif" letter-spacing="2.5">MOGGY'S</text>
-
-          <!-- ══ UPPER STRAP (アッパー) ══════════ -->
-          <path class="zone-upper"
-            d="M 62,260
-               C 57,216 68,170 95,142
-               C 125,112 171,98 225,94
-               L 279,94
-               C 333,98 379,112 409,142
-               C 436,170 447,216 442,260
-               Q 350,249 252,247 Q 154,249 62,260 Z"
-            fill="#7B4F2E"/>
-          <!-- suede surface sheen -->
-          <path
-            d="M 112,260 C 109,226 119,189 140,165
-               C 163,140 197,129 230,126 L 274,126
-               C 307,129 341,140 364,165 C 385,189 395,226 392,260
-               Q 330,251 252,249 Q 174,251 112,260 Z"
-            fill="rgba(255,255,255,0.05)" pointer-events="none"/>
-          <!-- strap texture grain lines -->
-          <path d="M 120,173 Q 252,157 384,173"
-            stroke="rgba(0,0,0,0.07)" stroke-width="1" fill="none"/>
-          <path d="M 100,204 Q 252,187 404,204"
-            stroke="rgba(0,0,0,0.06)" stroke-width="1" fill="none"/>
-          <path d="M 85,233 Q 252,215 419,233"
-            stroke="rgba(0,0,0,0.05)" stroke-width="1" fill="none"/>
-
-          <!-- ── FRINGE STRIPS (アッパーと同素材) ── -->
-          <!-- hanging from the bottom arc of the strap -->
-          <g class="zone-upper" fill="#7B4F2E">
-            <rect x="82"  y="256" width="5.5" height="44" rx="2.5"/>
-            <rect x="97"  y="253" width="5.5" height="47" rx="2.5"/>
-            <rect x="112" y="250" width="5.5" height="50" rx="2.5"/>
-            <rect x="127" y="248" width="5.5" height="52" rx="2.5"/>
-            <rect x="142" y="246" width="5.5" height="54" rx="2.5"/>
-            <rect x="157" y="245" width="5.5" height="55" rx="2.5"/>
-            <rect x="172" y="243" width="5.5" height="57" rx="2.5"/>
-            <rect x="187" y="242" width="5.5" height="58" rx="2.5"/>
-            <rect x="202" y="242" width="5.5" height="58" rx="2.5"/>
-            <rect x="217" y="242" width="5.5" height="58" rx="2.5"/>
-            <rect x="232" y="242" width="5.5" height="58" rx="2.5"/>
-            <rect x="247" y="242" width="5.5" height="58" rx="2.5"/>
-            <rect x="262" y="242" width="5.5" height="58" rx="2.5"/>
-            <rect x="277" y="242" width="5.5" height="58" rx="2.5"/>
-            <rect x="292" y="242" width="5.5" height="58" rx="2.5"/>
-            <rect x="307" y="243" width="5.5" height="57" rx="2.5"/>
-            <rect x="322" y="245" width="5.5" height="55" rx="2.5"/>
-            <rect x="337" y="246" width="5.5" height="54" rx="2.5"/>
-            <rect x="352" y="248" width="5.5" height="52" rx="2.5"/>
-            <rect x="367" y="250" width="5.5" height="50" rx="2.5"/>
-            <rect x="382" y="253" width="5.5" height="47" rx="2.5"/>
-            <rect x="397" y="256" width="5.5" height="44" rx="2.5"/>
-            <rect x="412" y="260" width="5.5" height="40" rx="2.5"/>
-          </g>
-
-          <!-- ── CENTRE TASSEL ── -->
-          <g class="zone-upper" fill="#7B4F2E">
-            <!-- cord from strap to knot -->
-            <rect x="249" y="222" width="6" height="30" rx="3"/>
-            <!-- tassel knot/gather -->
-            <ellipse cx="252" cy="252" rx="17" ry="12"/>
-            <!-- tassel fringe hanging below knot -->
-            <rect x="236" y="262" width="4.5" height="27" rx="2"/>
-            <rect x="243" y="263" width="4.5" height="29" rx="2"/>
-            <rect x="250" y="263" width="4.5" height="30" rx="2"/>
-            <rect x="257" y="263" width="4.5" height="29" rx="2"/>
-            <rect x="264" y="262" width="4.5" height="27" rx="2"/>
-          </g>
-
-          <!-- ── kiltie slot lines (decorative cuts) ── -->
-          <line x1="175" y1="132" x2="162" y2="168"
-            stroke="rgba(0,0,0,0.12)" stroke-width="1.5" stroke-linecap="round"/>
-          <line x1="202" y1="124" x2="189" y2="161"
-            stroke="rgba(0,0,0,0.12)" stroke-width="1.5" stroke-linecap="round"/>
-          <line x1="302" y1="124" x2="315" y2="161"
-            stroke="rgba(0,0,0,0.12)" stroke-width="1.5" stroke-linecap="round"/>
-          <line x1="329" y1="132" x2="342" y2="168"
-            stroke="rgba(0,0,0,0.12)" stroke-width="1.5" stroke-linecap="round"/>
-
-        </svg>
-
-        <div class="preview-sub">Color Preview — Ben's Sandal</div>
-        <div class="preview-name" id="preview-name">
-          茶 × ナチュラル × ダークブラウン × 黒
+          <div class="match-badge exact" id="match-badge">完全一致</div>
         </div>
 
-        <div class="chips">
-          <div class="chip">
-            <div class="chip-dot" id="chip-upper" style="background:#7B4F2E"></div>
-            <span>アッパー: <b id="chip-upper-name">茶</b></span>
-          </div>
-          <div class="chip">
-            <div class="chip-dot" id="chip-insole" style="background:#D4B896"></div>
-            <span>インソール: <b id="chip-insole-name">ナチュラル</b></span>
-          </div>
-          <div class="chip">
-            <div class="chip-dot" id="chip-stack" style="background:#3B1F0E"></div>
-            <span>スタック: <b id="chip-stack-name">ダークブラウン</b></span>
-          </div>
-          <div class="chip">
-            <div class="chip-dot" id="chip-sole" style="background:#1A1A1A"></div>
-            <span>ソール: <b id="chip-sole-name">黒</b></span>
+        <div class="preview-foot">
+          <div class="preview-product-name">Ben's Sandal</div>
+          <div class="chips">
+            <div class="chip">
+              <div class="chip-dot" id="chip-upper" style="background:#7B4F2E"></div>
+              <span>アッパー: <b id="chip-upper-name">ブラウン</b></span>
+            </div>
+            <div class="chip">
+              <div class="chip-dot" id="chip-insole" style="background:#7B4F2E"></div>
+              <span>インソール: <b id="chip-insole-name">ブラウン</b></span>
+            </div>
+            <div class="chip">
+              <div class="chip-dot" id="chip-stack" style="background:#7B4F2E"></div>
+              <span>スタック: <b id="chip-stack-name">ブラウン</b></span>
+            </div>
           </div>
         </div>
       </div><!-- /preview -->
@@ -477,47 +383,32 @@
       <div class="controls">
 
         <div class="cgroup">
-          <div class="chead">
-            <span class="clabel">Upper Color</span>
-            <span class="cname">アッパーカラー</span>
-          </div>
+          <span class="clabel">Upper Color</span>
+          <div class="cname">アッパーカラー</div>
           <p class="cdesc">ベルト・フリンジ部分のスエード革の色</p>
           <div class="swatches" id="sw-upper"></div>
         </div>
 
         <div class="cgroup">
-          <div class="chead">
-            <span class="clabel">Insole Color</span>
-            <span class="cname">インソール</span>
-          </div>
-          <p class="cdesc">足が直接触れるフットベッドの革の色</p>
+          <span class="clabel">Insole Color</span>
+          <div class="cname">インソール</div>
+          <p class="cdesc">足が触れるフットベッドの革の色</p>
           <div class="swatches" id="sw-insole"></div>
         </div>
 
         <div class="cgroup">
-          <div class="chead">
-            <span class="clabel">Stack Color</span>
-            <span class="cname">スタックカラー</span>
-          </div>
+          <span class="clabel">Stack Color</span>
+          <div class="cname">スタックカラー</div>
           <p class="cdesc">ソール側面の積み上げ革（コバ）の色</p>
           <div class="swatches" id="sw-stack"></div>
         </div>
 
-        <div class="cgroup">
-          <div class="chead">
-            <span class="clabel">Sole Color</span>
-            <span class="cname">ソールカラー</span>
-          </div>
-          <p class="cdesc">底面のアウトソール（ゴム底）の色</p>
-          <div class="swatches" id="sw-sole"></div>
-        </div>
-
         <a href="https://moggys-shoe-studio.square.site/"
-           target="_blank" class="order-link" id="order-link">
+           target="_blank" class="order-link">
           このカラーでオーダーする →
         </a>
+      </div>
 
-      </div><!-- /controls -->
     </div>
   </section>
 
@@ -527,20 +418,20 @@
     <div class="sec-ttl">実物サンプル</div>
     <div class="photos">
       <div>
-        <div class="photo">
-          <img src="p1.jpg" alt="Ben's Sandal — フロントビュー" loading="lazy">
+        <div class="photo-card">
+          <img src="p1.jpg" alt="Ben's Sandal フロントビュー" loading="lazy">
         </div>
         <p class="photo-cap">フロントビュー</p>
       </div>
       <div>
-        <div class="photo">
-          <img src="p2.jpg" alt="Ben's Sandal — サイドビュー" loading="lazy">
+        <div class="photo-card">
+          <img src="p2.jpg" alt="Ben's Sandal サイドビュー" loading="lazy">
         </div>
         <p class="photo-cap">サイドビュー</p>
       </div>
       <div>
-        <div class="photo">
-          <img src="p3.jpg" alt="Ben's Sandal — トップビュー" loading="lazy">
+        <div class="photo-card">
+          <img src="p3.jpg" alt="Ben's Sandal トップビュー" loading="lazy">
         </div>
         <p class="photo-cap">トップビュー</p>
       </div>
@@ -552,7 +443,7 @@
     <div class="sec-lbl">Order</div>
     <div class="sec-ttl">ご注文・お問い合わせ</div>
     <p>
-      シミュレーターで気に入ったカラーの組み合わせをそのままオーダーできます。<br>
+      シミュレーターで決めたカラーをそのままオーダーいただけます。<br>
       サイズ展開・価格・納期はオンラインショップをご覧ください。
     </p>
     <a href="https://moggys-shoe-studio.square.site/"
@@ -573,108 +464,135 @@
   </footer>
 
   <!-- ══════════════════════════════════════════════
-       SCRIPT — Color Simulator Logic
+       SCRIPT
   ════════════════════════════════════════════════ -->
   <script>
-    // ── Color palette ───────────────────────────
-    const palette = {
-      black:     { name: '黒',           hex: '#1A1A1A' },
-      darkbrown: { name: 'ダークブラウン', hex: '#3B1F0E' },
-      brown:     { name: '茶',           hex: '#7B4F2E' },
-      camel:     { name: 'キャメル',      hex: '#B8783A' },
-      beige:     { name: 'ベージュ',      hex: '#C9A87C' },
-      natural:   { name: 'ナチュラル',    hex: '#D4B896' },
-      white:     { name: 'ホワイト',      hex: '#F0E8DC' },
+    // ── Color definitions ────────────────────────
+    const C = {
+      BL: { name: 'ブラック',     hex: '#1A1A1A' },
+      BR: { name: 'ブラウン',     hex: '#7B4F2E' },
+      DB: { name: 'ダークブラウン', hex: '#3B1F0E' },
     };
+
+    // ── Available photo combinations ────────────
+    // key = "UPPER_INSOLE_STACK"
+    const photoKeys = new Set([
+      'BL_BL_BL',
+      'BL_BL_BR',
+      'BL_BR_BR',
+      'BR_BL_BL',
+      'BR_BL_BR',
+      'BR_BR_BR',
+      'DB_BR_BR',
+    ]);
 
     // ── Zone config ─────────────────────────────
     const zones = {
-      upper:  {
-        label:  'アッパーカラー',
-        colors: ['black', 'darkbrown', 'brown', 'camel', 'beige'],
-        def:    'brown'
-      },
-      insole: {
-        label:  'インソール',
-        colors: ['natural', 'beige', 'camel', 'brown', 'white', 'black'],
-        def:    'natural'
-      },
-      stack:  {
-        label:  'スタックカラー',
-        colors: ['black', 'darkbrown', 'brown', 'camel'],
-        def:    'darkbrown'
-      },
-      sole:   {
-        label:  'ソールカラー',
-        colors: ['black', 'darkbrown', 'brown'],
-        def:    'black'
-      },
+      upper:  { colors: ['BL','BR','DB'], def: 'BR' },
+      insole: { colors: ['BL','BR','DB'], def: 'BR' },
+      stack:  { colors: ['BR','BL'],      def: 'BR' },
     };
 
-    const state = {};
+    const state = { upper:'BR', insole:'BR', stack:'BR' };
+
+    // ── Find best image for combination ─────────
+    function findImage(upper, insole, stack) {
+      const exact = `${upper}_${insole}_${stack}`;
+      if (photoKeys.has(exact)) return { key: exact, exact: true };
+
+      // Priority 1: same upper + same stack → any insole
+      for (const ins of ['BR','BL','DB']) {
+        const k = `${upper}_${ins}_${stack}`;
+        if (photoKeys.has(k)) return { key: k, exact: false };
+      }
+
+      // Priority 2: same upper → any insole, any stack
+      for (const stk of ['BR','BL']) {
+        for (const ins of ['BR','BL','DB']) {
+          const k = `${upper}_${ins}_${stk}`;
+          if (photoKeys.has(k)) return { key: k, exact: false };
+        }
+      }
+
+      // Fallback
+      return { key: 'BR_BR_BR', exact: false };
+    }
+
+    // ── Update photo display ─────────────────────
+    let currentKey = null;
+
+    function showPhoto(key, isExact) {
+      if (key === currentKey) return;
+
+      const allImgs = document.querySelectorAll('#photo-stage img');
+      allImgs.forEach(img => img.classList.remove('visible'));
+
+      const next = document.getElementById('img-' + key);
+      if (next) {
+        next.classList.add('visible');
+        currentKey = key;
+      }
+
+      const badge = document.getElementById('match-badge');
+      if (isExact) {
+        badge.textContent = '完全一致';
+        badge.className = 'match-badge exact';
+      } else {
+        badge.textContent = '近似プレビュー';
+        badge.className = 'match-badge approx';
+      }
+    }
+
+    // ── Refresh everything ───────────────────────
+    function refresh() {
+      const { upper, insole, stack } = state;
+      const { key, exact } = findImage(upper, insole, stack);
+      showPhoto(key, exact);
+
+      // chips
+      ['upper','insole','stack'].forEach(z => {
+        const code = state[z];
+        const dot  = document.getElementById('chip-' + z);
+        const name = document.getElementById('chip-' + z + '-name');
+        if (dot)  dot.style.background = C[code].hex;
+        if (name) name.textContent      = C[code].name;
+      });
+    }
+
+    // ── Pick a color ─────────────────────────────
+    function pick(zone, code) {
+      state[zone] = code;
+
+      document.querySelectorAll('[data-zone="' + zone + '"]').forEach(b => {
+        b.classList.toggle('active', b.dataset.code === code);
+      });
+
+      refresh();
+    }
 
     // ── Build swatch buttons ─────────────────────
     function buildSwatches() {
       Object.entries(zones).forEach(([zone, cfg]) => {
-        state[zone] = cfg.def;
         const wrap = document.getElementById('sw-' + zone);
-        cfg.colors.forEach(key => {
+        cfg.colors.forEach(code => {
           const btn = document.createElement('button');
-          btn.className = 'sw' + (key === cfg.def ? ' active' : '');
-          btn.dataset.zone  = zone;
-          btn.dataset.color = key;
-          btn.title = palette[key].name;
-          btn.setAttribute('aria-label', palette[key].name);
+          btn.className = 'sw' + (code === cfg.def ? ' active' : '');
+          btn.dataset.zone = zone;
+          btn.dataset.code = code;
+          btn.title = C[code].name;
+          btn.setAttribute('aria-label', C[code].name);
           btn.innerHTML =
-            `<div class="sw-circle" style="background:${palette[key].hex}"></div>` +
-            `<span class="sw-name">${palette[key].name}</span>`;
-          btn.addEventListener('click', () => pick(zone, key));
+            `<div class="sw-circle" style="background:${C[code].hex}"></div>` +
+            `<span class="sw-name">${C[code].name}</span>`;
+          btn.addEventListener('click', () => pick(zone, code));
           wrap.appendChild(btn);
         });
-        applyFill(zone, cfg.def);
       });
     }
 
-    // ── Handle color pick ───────────────────────
-    function pick(zone, key) {
-      state[zone] = key;
-      applyFill(zone, key);
-
-      // swatch active ring
-      document.querySelectorAll('[data-zone="' + zone + '"]').forEach(b => {
-        b.classList.toggle('active', b.dataset.color === key);
-      });
-
-      // chip update
-      const dot  = document.getElementById('chip-' + zone);
-      const name = document.getElementById('chip-' + zone + '-name');
-      if (dot)  dot.style.background = palette[key].hex;
-      if (name) name.textContent = palette[key].name;
-
-      // preview title
-      refreshTitle();
-    }
-
-    // ── Apply fill to all SVG elements in zone ──
-    function applyFill(zone, key) {
-      const hex = palette[key].hex;
-      document.querySelectorAll('.zone-' + zone).forEach(el => {
-        el.style.fill = hex;
-      });
-    }
-
-    // ── Refresh the "A × B × C × D" title ──────
-    function refreshTitle() {
-      const el = document.getElementById('preview-name');
-      if (!el) return;
-      el.textContent =
-        palette[state.upper].name  + ' × ' +
-        palette[state.insole].name + ' × ' +
-        palette[state.stack].name  + ' × ' +
-        palette[state.sole].name;
-    }
-
+    // ── Init ─────────────────────────────────────
     buildSwatches();
+    refresh();   // show default: BR_BR_BR → exact match
   </script>
 </body>
 </html>
