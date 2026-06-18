@@ -119,9 +119,41 @@
       width: 100%; height: 100%;
       object-fit: cover;
       opacity: 0;
-      transition: opacity 0.45s ease;
+      transition: opacity 0.4s ease;
     }
     .photo-stage img.visible { opacity: 1; }
+
+    /* Loading spinner */
+    .photo-stage::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+    }
+    .photo-stage.loading::after {
+      opacity: 1;
+    }
+    .spinner {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 36px; height: 36px;
+      border: 3px solid rgba(184,154,122,0.3);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 3;
+      pointer-events: none;
+    }
+    .photo-stage.loading .spinner { opacity: 1; }
+    @keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
 
     /* match badge */
     .match-badge {
@@ -349,15 +381,24 @@
       <div class="preview">
         <div class="photo-stage" id="photo-stage">
 
-          <!-- All combination images preloaded, switched via JS -->
-          <img id="img-BL_BL_BL" src="sandal.pic/BL_BL_BL.png" alt="ブラック × ブラック × ブラック">
-          <img id="img-BL_BL_BR" src="sandal.pic/BL_BL_BR.png" alt="ブラック × ブラック × ブラウン">
-          <img id="img-BL_BR_BR" src="sandal.pic/BL_BR_BR.png" alt="ブラック × ブラウン × ブラウン">
-          <img id="img-BR_BL_BL" src="sandal.pic/BR_BL_BL.png" alt="ブラウン × ブラック × ブラック">
-          <img id="img-BR_BL_BR" src="sandal.pic/BR_BL_BR.png" alt="ブラウン × ブラック × ブラウン">
-          <img id="img-BR_BR_BR" src="sandal.pic/BR_BR_BR.png" alt="ブラウン × ブラウン × ブラウン">
-          <img id="img-DB_BR_BR" src="sandal.pic/DB_BR_BR.png" alt="ダークブラウン × ブラウン × ブラウン">
+          <!-- Default image loaded immediately; others use data-src (lazy) -->
+          <img id="img-BR_BR_BR" src="sandal.pic/BR_BR_BR.jpg"
+               alt="ブラウン × ブラウン × ブラウン" class="visible">
+          <img id="img-BL_BL_BL" data-src="sandal.pic/BL_BL_BL.jpg"
+               alt="ブラック × ブラック × ブラック">
+          <img id="img-BL_BL_BR" data-src="sandal.pic/BL_BL_BR.jpg"
+               alt="ブラック × ブラック × ブラウン">
+          <img id="img-BL_BR_BR" data-src="sandal.pic/BL_BR_BR.jpg"
+               alt="ブラック × ブラウン × ブラウン">
+          <img id="img-BR_BL_BL" data-src="sandal.pic/BR_BL_BL.jpg"
+               alt="ブラウン × ブラック × ブラック">
+          <img id="img-BR_BL_BR" data-src="sandal.pic/BR_BL_BR.jpg"
+               alt="ブラウン × ブラック × ブラウン">
+          <img id="img-DB_BR_BR" data-src="sandal.pic/DB_BR_BR.jpg"
+               alt="ダークブラウン × ブラウン × ブラウン">
 
+          <!-- Loading spinner (shown while image downloads) -->
+          <div class="spinner" id="spinner"></div>
           <div class="match-badge exact" id="match-badge">完全一致</div>
         </div>
 
@@ -525,24 +566,48 @@
     function showPhoto(key, isExact) {
       if (key === currentKey) return;
 
-      const allImgs = document.querySelectorAll('#photo-stage img');
-      allImgs.forEach(img => img.classList.remove('visible'));
+      const stage  = document.getElementById('photo-stage');
+      const next   = document.getElementById('img-' + key);
+      if (!next) return;
 
-      const next = document.getElementById('img-' + key);
-      if (next) {
+      // Lazy-load: assign src from data-src if not yet loaded
+      if (!next.src || next.getAttribute('src') === '') {
+        next.src = next.dataset.src;
+      }
+
+      const switchNow = () => {
+        document.querySelectorAll('#photo-stage img').forEach(img => img.classList.remove('visible'));
         next.classList.add('visible');
+        stage.classList.remove('loading');
         currentKey = key;
+      };
+
+      if (next.complete && next.naturalWidth > 0) {
+        // Already in cache → instant switch
+        switchNow();
+      } else {
+        // Still downloading → show spinner, switch when ready
+        stage.classList.add('loading');
+        next.onload  = switchNow;
+        next.onerror = () => stage.classList.remove('loading');
       }
 
+      // Update badge
       const badge = document.getElementById('match-badge');
-      if (isExact) {
-        badge.textContent = '完全一致';
-        badge.className = 'match-badge exact';
-      } else {
-        badge.textContent = '近似プレビュー';
-        badge.className = 'match-badge approx';
-      }
+      badge.textContent = isExact ? '完全一致' : '近似プレビュー';
+      badge.className   = 'match-badge ' + (isExact ? 'exact' : 'approx');
     }
+
+    // Background preload: start downloading other images 1.5s after page load
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.querySelectorAll('#photo-stage img[data-src]').forEach(img => {
+          if (!img.src || img.getAttribute('src') === '') {
+            img.src = img.dataset.src;
+          }
+        });
+      }, 1500);
+    });
 
     // ── Refresh everything ───────────────────────
     function refresh() {
