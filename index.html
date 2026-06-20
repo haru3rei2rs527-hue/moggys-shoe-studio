@@ -337,15 +337,67 @@
       .sim-grid { grid-template-columns: 1fr; }
       .preview { position: static; }
     }
+
+    /* ── MOBILE (≤600px) ─────────────────────────
+       目標: 写真とカラー選択を同一画面に収める
+    ──────────────────────────────────────────── */
     @media (max-width: 600px) {
-      header { padding: 0 20px; }
-      .hero { padding: 40px 20px 48px; }
-      .hero h1 { font-size: 34px; }
-      .sim-wrap, .gallery { padding: 0 16px; }
-      .sim-wrap { margin: 40px auto; }
-      .photos { grid-template-columns: 1fr; }
-      footer { padding: 24px 20px; flex-direction: column; align-items: flex-start; }
+      /* Header */
+      header { padding: 0 16px; height: 56px; }
+      .logo { height: 36px; }
+
+      /* Hero: 最小限に圧縮 */
+      .hero { padding: 18px 16px 22px; }
+      .hero h1 { font-size: 26px; }
+      .hero p  { font-size: 11px; margin-top: 6px; line-height: 1.6; }
+      .badge   { display: none; }
+
+      /* Simulator wrap */
+      .sim-wrap { margin: 14px auto; padding: 0 12px; }
+      .controls { gap: 10px; }
+
+      /* 写真: 16:9 に変更（4:3 より縦が短くなる） */
+      .photo-stage { aspect-ratio: 16 / 9; }
+
+      /* Preview footer: コンパクトに */
+      .preview-foot { padding: 10px 14px 12px; }
+      .preview-product-name { font-size: 14px; margin-bottom: 8px; }
+      .chips { gap: 5px; }
+      .chip  { font-size: 9px; padding: 3px 8px 3px 5px; }
+      .chip-dot { width: 7px; height: 7px; }
+
+      /* バッジ */
+      .match-badge { font-size: 9px; padding: 4px 10px; top: 10px; right: 10px; }
+
+      /* カラー選択グループ: コンパクトに */
+      .cgroup   { padding: 12px 14px; border-radius: 10px; }
+      .clabel   { font-size: 8px; margin-bottom: 2px; }
+      .cname    { font-size: 13px; }
+      .cdesc    { font-size: 10px; margin: 4px 0 10px; }
+      .swatches { gap: 10px; }
+
+      /* スウォッチボタン: 少し小さく */
+      .sw-circle { width: 40px; height: 40px; }
+      .sw-name   { font-size: 9px; }
+
+      /* オーダーボタン */
+      .order-link { padding: 14px; font-size: 12px; }
+
+      /* Gallery */
+      .gallery  { padding: 40px 12px 48px; }
+      .sec-ttl  { font-size: 22px; margin-bottom: 18px; }
+      .photos   { grid-template-columns: 1fr; }
+
+      /* Footer */
+      footer { padding: 20px 16px; flex-direction: column; align-items: flex-start; }
       .footer-info { text-align: left; }
+    }
+
+    /* 極小端末 (≤380px) */
+    @media (max-width: 380px) {
+      .sw-circle { width: 36px; height: 36px; }
+      .swatches  { gap: 8px; }
+      .hero h1   { font-size: 22px; }
     }
   </style>
 </head>
